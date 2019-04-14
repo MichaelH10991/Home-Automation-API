@@ -23,6 +23,7 @@ def teardown_db(exception):
                 db.close()
 
 @app.route("/")
+
 def index():
     """Present some documentation"""
 
@@ -40,7 +41,7 @@ class DeviceList(Resource):
                 shelf = get_db()
                 keys = list(shelf.keys())
                 devices = [shelf[key] for key in keys]
-                return {'message': 'Success', 'data': devices}
+                return {'data': devices, 'message': 'Success'}
 
         def post(self):
                 parser = reqparse.RequestParser()
@@ -55,7 +56,7 @@ class DeviceList(Resource):
                 shelf = get_db()
                 shelf[args['identifier']] = args
 
-                return {'message': 'Device registered', 'data': args}, 201
+                return {'data': args, 'message': 'Device registered'}, 201
 
 class Device(Resource):
         def get(self, identifier):
@@ -63,15 +64,15 @@ class Device(Resource):
 
                 #if the key does not exist in the datastore return a 404
                 if not (identifier in shelf):
-                        return {'message': 'Device not found', 'data': {}}, 404
+                        return {'data': {}, 'message': 'Device not found'}, 404
 
-                return {'message': 'Device found', 'data': shelf[identifier]}, 200
+                return {'data': shelf[identifier], 'message': 'Device found'}, 200
 
         def delete(self, identifier):
                 shelf = get_db()
                 #if the key does not exist in the datastore return a 404
                 if not (identifier in shelf):
-                        return {'message': 'Device not found', 'data': {}}, 404
+                        return {'data': {}, 'message': 'Device not found'}, 404
                 
                 del shelf[identifier]
                 return '', 204
