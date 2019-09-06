@@ -1,10 +1,10 @@
-# device registry service
+# Device registry service
 
 ## Running
 
-Punch in `docker-compose up --build` in the root
+Enter `docker-compose up --build` in the root
 
-## usage
+## Usage
 
 All responses will have the form
 
@@ -21,32 +21,34 @@ Subsequent response definitions will only detail the expected value of the `data
 
 **Definitions**
 
-`GET /devices`
+GET `/devices`
 
 **Response**
 
-- `200 OK` on success
+`200 OK` on success
 
 ```json
-({
-  "identifier": "floor-lamp",
-  "name": "Floor Lamp",
-  "device_type": "switch",
-  "controller_gateway": "192.1.68.0.2"
-},
-{
-  "identifier": "samsung-tv",
-  "name": "Living Room TV",
-  "device_type": "tv",
-  "controller_gateway": "192.1.68.0.9"
-})
+[
+  {
+    "identifier": "floor-lamp",
+    "name": "Floor Lamp",
+    "device_type": "switch",
+    "controller_gateway": "192.1.68.0.2"
+  },
+  {
+    "identifier": "samsung-tv",
+    "name": "Living Room TV",
+    "device_type": "tv",
+    "controller_gateway": "192.1.68.0.9"
+  }
+]
 ```
 
 ### Registering a new divice
 
 **Definitions**
 
-`POST /devices`
+POST `/devices`
 
 **Arguments**
 
@@ -72,7 +74,7 @@ If a device with the given identifier already exists, the wcisting device will b
 
 ## Lookup device details
 
-`GET /device/<identifier>`
+GET `/device/<identifier>`
 
 **Response**
 
@@ -92,7 +94,7 @@ If a device with the given identifier already exists, the wcisting device will b
 
 **Definition**
 
-`DELETE /devices/<identifier>`
+DELETE `/devices/<identifier>`
 
 - `404 Not Found` if the device does not exist
 - `204 No Content` No content
